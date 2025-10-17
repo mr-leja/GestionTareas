@@ -1,0 +1,23 @@
+# Ignorar entornos virtuales
+env/
+venv/
+.venv/
+
+# Ignorar dependencias de Node.js
+node_modules/
+
+# Ignorar archivos temporales de Python
+*.pyc
+__pycache__/
+
+# Otros comunes (opcional)
+.env
+
+
+# Archivos de entorno
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+*.log
