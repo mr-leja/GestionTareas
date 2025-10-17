@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { getTasks, deleteTask } from "../../api/taskService";
-import { Task } from "../../api/taskService";
+import { getTasks, deleteTask, updateTask, Task } from "../../api/taskService";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import Swal from "sweetalert2";
 
 export default function TaskList() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -15,16 +15,43 @@ export default function TaskList() {
       const data = await getTasks();
       setTasks(data);
     } catch (error) {
-      alert("Error al cargar tareas. Verifica tu sesión.");
+      Swal.fire({
+        icon: "error",
+        title: "Error al cargar tareas",
+        text: "Verifica tu sesión.",
+      });
       navigate("/login");
     }
   };
 
   const handleDelete = async (id: number) => {
-    if (window.confirm("¿Deseas eliminar esta tarea?")) {
+    const result = await Swal.fire({
+      title: "¿Eliminar tarea?",
+      text: "Esta acción no se puede deshacer.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+    });
+
+    if (result.isConfirmed) {
       await deleteTask(id);
-      loadTasks();
+      await loadTasks();
+      Swal.fire({
+        icon: "success",
+        title: "Tarea eliminada",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
+  };
+
+  const handleToggleComplete = async (task: Task) => {
+    const updatedTask = { ...task, estado: !task.estado };
+    await updateTask(task.id!, updatedTask);
+    setTasks((prev) => prev.map((t) => (t.id === task.id ? updatedTask : t)));
   };
 
   useEffect(() => {
@@ -73,13 +100,36 @@ export default function TaskList() {
             <div
               key={t.id}
               className="list-group-item list-group-item-action mb-3 rounded-3 shadow-sm"
+              style={{
+                backgroundColor: t.estado ? "#d4edda" : "white", // Verde suave si completada
+                borderLeft: t.estado
+                  ? "6px solid #28a745"
+                  : "6px solid transparent",
+              }}
             >
               <div className="d-flex justify-content-between align-items-center mb-2">
-                <h5 className="mb-0">{t.titulo}</h5>
+                <div className="d-flex align-items-center gap-2">
+                  {/* Checkbox para marcar como completada */}
+                  <input
+                    type="checkbox"
+                    checked={t.estado}
+                    onChange={() => handleToggleComplete(t)}
+                    style={{ width: "18px", height: "18px", cursor: "pointer" }}
+                  />
+                  <h5
+                    className="mb-0"
+                    style={{
+                      textDecoration: t.estado ? "line-through" : "none",
+                      color: t.estado ? "#155724" : "black",
+                    }}
+                  >
+                    {t.titulo}
+                  </h5>
+                </div>
                 <span
                   className={`badge ${t.estado ? "bg-success" : "bg-danger"}`}
                 >
-                  {t.estado ? "✔️ Completada" : "❌ Pendiente"}
+                  {t.estado ? " Completada" : "Pendiente"}
                 </span>
               </div>
               <p className="mb-1">{t.descripcion}</p>
