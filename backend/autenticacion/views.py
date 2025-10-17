@@ -50,4 +50,19 @@ def profile(request):
     serializer = UserSerializer(instance=user)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+@api_view(['POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def logout(request):
+    """
+    Cierra la sesión del usuario eliminando su token actual.
+    """
+    try:
+        # Eliminar el token actual del usuario autenticado
+        request.user.auth_token.delete()
+        return Response({'message': 'Sesión cerrada correctamente'}, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({'error': 'No se pudo cerrar la sesión'}, status=status.HTTP_400_BAD_REQUEST)
+
+
 
