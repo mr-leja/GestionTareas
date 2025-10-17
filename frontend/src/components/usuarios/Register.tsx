@@ -1,6 +1,7 @@
 // src/components/usuarios/Register.tsx
 import { useState } from "react";
 import { registerUser } from "../../api/authService";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function Register() {
   const [username, setUsername] = useState("");
@@ -20,51 +21,65 @@ export default function Register() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-2xl shadow-md w-96">
-        <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
-          Crear Cuenta
-        </h2>
+    <div
+      className="d-flex justify-content-center align-items-center vh-100"
+      style={{ background: "#f0f2f5" }}
+    >
+      <div
+        className="card shadow-lg p-5 rounded-4"
+        style={{ maxWidth: "400px", width: "100%" }}
+      >
+        <h2 className="text-center mb-4 fw-bold text-dark">Crear Cuenta</h2>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <input
-            type="text"
-            placeholder="Nombre de usuario"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-            className="border border-gray-300 p-2 rounded-lg"
-          />
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <input
+              type="text"
+              className="form-control form-control-lg rounded-3"
+              placeholder="Nombre de usuario"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+          </div>
 
-          <input
-            type="email"
-            placeholder="Correo electrónico"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="border border-gray-300 p-2 rounded-lg"
-          />
+          <div className="mb-3">
+            <input
+              type="email"
+              className="form-control form-control-lg rounded-3"
+              placeholder="Correo electrónico"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
 
-          <input
-            type="password"
-            placeholder="Contraseña"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="border border-gray-300 p-2 rounded-lg"
-          />
+          <div className="mb-4">
+            <input
+              type="password"
+              className="form-control form-control-lg rounded-3"
+              placeholder="Contraseña"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
 
           <button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-lg transition duration-200"
+            className="btn btn-primary w-100 btn-lg shadow-sm"
+            style={{
+              background: "linear-gradient(90deg, #6a11cb 0%, #2575fc 100%)",
+              border: "none",
+            }}
           >
             Registrarse
           </button>
         </form>
 
-        <p className="text-center text-gray-600 mt-4">
+        <p className="text-center text-muted mt-4">
           ¿Ya tienes una cuenta?{" "}
-          <a href="/login" className="text-blue-500 hover:underline">
+          <a href="/login" className="text-primary fw-semibold">
             Inicia sesión
           </a>
         </p>
