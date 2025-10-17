@@ -26,7 +26,7 @@ function App() {
           path="/register"
           element={
             localStorage.getItem("token") ? (
-              <Navigate to="/profile" replace />
+              <Navigate to="/login" replace />
             ) : (
               <Register />
             )
