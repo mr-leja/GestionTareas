@@ -38,7 +38,6 @@ export default function Profile() {
       ) : (
         <p>Cargando...</p>
       )}
-         
     </div>
   );
 }
