@@ -6,10 +6,32 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 
+/**
+ * Componente que muestra la lista de tareas del usuario autenticado.
+ *
+ * - Carga las tareas desde el backend al montarse.
+ * - Permite marcar tareas como completadas o pendientes.
+ * - Permite editar y eliminar tareas.
+ * - Redirige al login si ocurre un error de autenticación.
+ *
+ * @component
+ * @returns Interfaz de lista de tareas.
+ */
 export default function TaskList() {
+  /**
+   * Estado local que contiene la lista de tareas.
+   */
   const [tasks, setTasks] = useState<Task[]>([]);
+
+  /**
+   * Hook de navegación proporcionado por React Router.
+   */
   const navigate = useNavigate();
 
+  /**
+   * Carga la lista de tareas del usuario desde la API.
+   * En caso de error, muestra una alerta y redirige al login.
+   */
   const loadTasks = async () => {
     try {
       const data = await getTasks();
@@ -24,6 +46,11 @@ export default function TaskList() {
     }
   };
 
+  /**
+   * Elimina una tarea específica tras confirmar con el usuario.
+   *
+   * @param {number} id - ID de la tarea a eliminar.
+   */
   const handleDelete = async (id: number) => {
     const result = await Swal.fire({
       title: "¿Eliminar tarea?",
@@ -48,12 +75,20 @@ export default function TaskList() {
     }
   };
 
+  /**
+   * Cambia el estado de una tarea (completada/pendiente).
+   *
+   * @param {Task} task - Tarea que se desea actualizar.
+   */
   const handleToggleComplete = async (task: Task) => {
     const updatedTask = { ...task, estado: !task.estado };
     await updateTask(task.id!, updatedTask);
     setTasks((prev) => prev.map((t) => (t.id === task.id ? updatedTask : t)));
   };
 
+  /**
+   * Al montar el componente, se cargan las tareas del usuario.
+   */
   useEffect(() => {
     loadTasks();
   }, []);
@@ -80,6 +115,7 @@ export default function TaskList() {
         </div>
       </nav>
 
+      {/* Contenido principal */}
       <div className="container py-5">
         <div className="d-flex justify-content-between align-items-center mb-4">
           <h2 className="fw-bold">Mis Tareas</h2>
@@ -101,7 +137,7 @@ export default function TaskList() {
               key={t.id}
               className="list-group-item list-group-item-action mb-3 rounded-3 shadow-sm"
               style={{
-                backgroundColor: t.estado ? "#d4edda" : "white", // Verde suave si completada
+                backgroundColor: t.estado ? "#d4edda" : "white",
                 borderLeft: t.estado
                   ? "6px solid #28a745"
                   : "6px solid transparent",
@@ -109,7 +145,7 @@ export default function TaskList() {
             >
               <div className="d-flex justify-content-between align-items-center mb-2">
                 <div className="d-flex align-items-center gap-2">
-                  {/* Checkbox para marcar como completada */}
+                  {/* Checkbox para completar tarea */}
                   <input
                     type="checkbox"
                     checked={t.estado}

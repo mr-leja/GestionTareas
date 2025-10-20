@@ -2,9 +2,28 @@ import { useEffect, useState } from "react";
 import { getProfile } from "../../api/authService";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+/**
+ * Componente de perfil del usuario autenticado.
+ *
+ * - Obtiene la información del usuario mediante `getProfile`.
+ * - Muestra los datos del perfil si el token es válido.
+ * - Redirige al login si la sesión ha expirado o el token no es válido.
+ * - Permite cerrar sesión eliminando el token del `localStorage`.
+ *
+ * @component
+ * @returns {JSX.Element} Interfaz del perfil de usuario.
+ */
 export default function Profile() {
-  const [user, setUser] = useState<any>(null);
+  /**
+   * Estado local que almacena la información del usuario.
+   * Se establece al montar el componente si el token es válido.
+   */
+  const [user, setUser] = useState<any>(null); // 💡 Tip: Usa una interfaz para evitar 'any'
 
+  /**
+   * Efecto que se ejecuta una sola vez al montar el componente.
+   * Llama a `getProfile` para obtener los datos del usuario autenticado.
+   */
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -18,6 +37,10 @@ export default function Profile() {
     fetchProfile();
   }, []);
 
+  /**
+   * Cierra la sesión del usuario eliminando el token del `localStorage`
+   * y redirige al login.
+   */
   const handleLogout = () => {
     localStorage.removeItem("token");
     window.location.href = "/login";
@@ -25,12 +48,12 @@ export default function Profile() {
 
   return (
     <div className="bg-light min-vh-100 d-flex justify-content-center align-items-start py-5">
-      {/* Wrapper central */}
+      {/* Contenedor principal */}
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-12 col-md-8 col-lg-6">
             <div className="bg-white rounded-4 shadow p-4">
-              {/* Banner */}
+              {/* Encabezado */}
               <div
                 className="d-flex justify-content-center align-items-center mb-4 rounded-3"
                 style={{
@@ -47,7 +70,7 @@ export default function Profile() {
                 </h1>
               </div>
 
-              {/* Info del usuario */}
+              {/* Información del usuario */}
               <div className="text-center">
                 {user ? (
                   <>
