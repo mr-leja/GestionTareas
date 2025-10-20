@@ -8,7 +8,7 @@ export interface Task {
   estado: boolean;
 }
 
-// ✅ Obtener todas las tareas del usuario autenticado
+// ✅ Lista de tareas obtenidas del backend.
 export const getTasks = async () => {
   const response = await api.get("tareas/");
   return response.data;
