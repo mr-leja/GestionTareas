@@ -12,6 +12,7 @@ from django.shortcuts import get_object_or_404
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def listar_tareas(request):
+    # Solo tareas del usuario actual
     tareas = Tarea.objects.filter(user=request.user).order_by('-id')
     serializer = TareaSerializer(tareas, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
@@ -23,6 +24,7 @@ def listar_tareas(request):
 def crear_tarea(request):
     serializer = TareaSerializer(data=request.data)
     if serializer.is_valid():
+        # Asocia la tarea al usuario actual
         serializer.save(user=request.user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -32,7 +34,9 @@ def crear_tarea(request):
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def editar_tarea(request, id):
+    # Busca la tarea y se asegura de que pertenezca al usuario actual
     tarea = get_object_or_404(Tarea, id=id, user=request.user)
+     # Se permite edición parcial con 'partial=True'
     serializer = TareaSerializer(instance=tarea, data=request.data, partial=True)
     if serializer.is_valid():
         serializer.save()
@@ -45,6 +49,7 @@ def editar_tarea(request, id):
 @permission_classes([IsAuthenticated])
 def eliminar_tarea(request, id):
     tarea = get_object_or_404(Tarea, id=id, user=request.user)
+    # Elimina la tarea
     tarea.delete()
     return Response({'message': 'Tarea eliminada correctamente'}, status=status.HTTP_204_NO_CONTENT)
 
