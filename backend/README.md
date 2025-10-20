@@ -10,31 +10,24 @@ Está estructurado en dos carpetas principales: `backend/` (Python) y `frontend/
 ### Backend (API)
 
 - Python
-- Django
+- Django Rest Framework
 - Mysql
 - CORS Headers (para conexión con frontend)
 
 ### Frontend (UI)
 
 - React
-- Vite
-- Axios o Fetch API (para llamadas al backend)
-
----
-
-## Installation
-
-instalar dependencias usando:
-
--pip install -r requirements.txt
+- TypeScript
+- Axios (para llamadas al backend)
 
 ---
 
 ## ✅ Requisitos previos
 
-- Python 3.14
+- Python 3.12
 - Django 5.2.7
-- Node.js y npm
+- Django rest framework
+- Node.js
 - Git (opcional)
 
 ---
@@ -43,7 +36,7 @@ instalar dependencias usando:
 
 ### 1. Clona el repositorio
 
-git clone https://github.com/mr-leja/Task-Management.git
+git clone https://github.com/mr-leja/GestionTareas.git
 cd taskmanagement
 cd Backend
 
@@ -55,7 +48,7 @@ python -m venv env
 
 # Windows
 
-.\env\Scripts\activate
+.\.venv\Scripts\activate
 
 # macOS/Linux
 
@@ -86,28 +79,6 @@ npm install
 
 # Ejecutar servidor de desarrollo
 
-npm run dev
-
----
-
-## 📁 Estructura del proyecto
-
-TaskManagement/
-├── backend/
-│ ├── env/ # Entorno virtual de Python
-│ ├── proyecto/ # Proyecto Django (configuración, settings)
-│ ├── app/ # App Django (lógica)
-│ ├── manage.py
-│ └── requirements.txt
-│
-├── frontend/
-│ ├── node_modules/
-│ ├── public/
-│ ├── src/
-│ ├── package.json
-│ ├── vite.config.js
-│ └── index.html
-│
-└── README.md
+npm start
 
 ---

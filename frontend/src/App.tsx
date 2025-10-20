@@ -1,10 +1,10 @@
 // src/App.tsx
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Login from "./components/usuarios/Login";
-import Register from "./components/usuarios/Register";
-import Profile from "./components/usuarios/Profile";
-import TaskList from "./components/Tareas/TaskList";
-import TaskForm from "./components/Tareas/TaskForm";
+import Login from "./components/users/Login";
+import Register from "./components/users/Register";
+import Profile from "./components/users/Profile";
+import TaskList from "./components/Task/TaskList";
+import TaskForm from "./components/Task/TaskForm";
 import ProtectedRoute from "./ProtectedRoute";
 
 function App() {

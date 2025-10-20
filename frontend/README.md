@@ -47,8 +47,8 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 ## Installation
 
-simply use:
-
+git clone https://github.com/mr-leja/GestionTareas.git
+cd rontend
 npm install
 npm start
 
