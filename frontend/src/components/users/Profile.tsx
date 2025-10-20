@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { getProfile } from "../../api/authService";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 /**
  * Componente de perfil del usuario autenticado.
@@ -53,6 +55,29 @@ export default function Profile() {
         <div className="row justify-content-center">
           <div className="col-12 col-md-8 col-lg-6">
             <div className="bg-white rounded-4 shadow p-4">
+              {/* 🔙 Flecha para volver a la lista de tareas */}
+              <button
+                onClick={() => (window.location.href = "/tasks")}
+                className="btn position-absolute top-0 start-0 m-3"
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  color: "#6a11cb",
+                  fontSize: "1.5rem",
+                  transition: "transform 0.2s, color 0.2s",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "scale(1.2)";
+                  e.currentTarget.style.color = "#2575fc";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "scale(1)";
+                  e.currentTarget.style.color = "#6a11cb";
+                }}
+              >
+                <FontAwesomeIcon icon={faArrowLeft} />
+              </button>
+
               {/* Encabezado */}
               <div
                 className="d-flex justify-content-center align-items-center mb-4 rounded-3"
