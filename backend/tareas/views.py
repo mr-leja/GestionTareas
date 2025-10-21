@@ -7,7 +7,7 @@ from .models import Tarea
 from .serializers import TareaSerializer
 from django.shortcuts import get_object_or_404
 
-# ✅ Listar todas las tareas del usuario autenticado
+
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
@@ -17,7 +17,7 @@ def listar_tareas(request):
     serializer = TareaSerializer(tareas, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
-# ✅ Crear una nueva tarea
+
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
@@ -29,7 +29,7 @@ def crear_tarea(request):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# ✅ Editar una tarea existente
+
 @api_view(['PUT'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
@@ -43,7 +43,6 @@ def editar_tarea(request, id):
         return Response(serializer.data, status=status.HTTP_200_OK)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# ✅ Eliminar una tarea
 @api_view(['DELETE'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
